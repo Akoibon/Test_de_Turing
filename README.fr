@@ -1,0 +1,35 @@
+++README en Construction+++
+
+Turing Test Program
+by [Akoibon:quentin.heyler@yahoo.fr]
+
+Ceci est un programme qui permet jouer au test de Turing.
+Dans un test de Turing, les joueurs doivent décider si ils parlent à un humain ou à une machine.
+Le code a était créer pour un atelier présenté lors du 100 éme anniversaire d'Alan Turing : https://project.inria.fr/turing2012/
+Il a était présenté plus tard pour le whatever apero du hackerspace rennais le 01/02/2012.
+
+Pour ce jeu, on cache un humain quelque part qui receptionne les communications.
+C'est lui qui 
+Pour jouer il est necessaire de diposer de plusieurs pc relié en réseaux.
+Sur une 
+L offre deux interfaces pour communiquer
+Il utilise le cleverbot
+
++++ Librairie nécessaire +++
+
+Pour qu ca marche, il faut la librairie graphique [gtk] et le binding [pygtk].
+On peut tester pour voire si les librairies sont ok en utilisant l'interpreteur python dans un terminal :
+akoibon@akoibon-machine:~$ python
+Python 2.6.6 (r266:84292, Dec 27 2010, 00:02:40) 
+[GCC 4.4.5] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import gtk
+>>> import pygtk
+>>> 
+
++++ Mise en place +++
+
+Creative Commons Licence
+
+Remerciement dans l'ordre des coups de main:
+Joseph,Francois,Geb,Anthony, manu et python
