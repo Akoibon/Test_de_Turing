@@ -3,7 +3,7 @@
 import socket, glib, sys
 import gtk 
 import pygtk
-import re
+import format_bot
 
 class Interface:
 	def __init__(self,controller):
@@ -39,8 +39,6 @@ class Interface:
 	
 	def on_robot_clicked(self, widget):
 		self.print_text("info","Vous avez votez pour un robot")
-		#++print the result -> win/loose
-		#stop the game 	, print a message of result for mysterious. clear mysterious window
 		self.set_active_button(False,False)
 		self.controller.vote_robot()
 
@@ -64,7 +62,7 @@ class Interface:
 			self.entry.set_text("")	
 
 	def print_text(self,name,text):
-		text = self.formating_bot_text(text)
+		text = format_bot.formating_bot_text(text)
 		self.liststore.append([str(name),str(text)])
 		self.scrolledwindow.get_vadjustment().set_value( self.scrolledwindow.get_vadjustment().get_upper())
 
@@ -74,22 +72,6 @@ class Interface:
 		self.send.set_sensitive(val)
 		self.reload.set_sensitive(reload)
 
-	#ajoute une majuscule au debut de chaine et termine par un point si necessaire
-	def formating_bot_text(self, st):
-		st = st.strip()
-		m = re.search(r'[\?\.\!]$',st)
-		if m is None:
-			st += '.'
-		st = st.replace("&eacute;","é")
-		st = st.replace("&ntilde","n") #??
-		st = st.replace("&ccedil;","ç")
-		st = st.replace("&egrave;","è")
-		st = st.replace("&agrave;","a")
-		st = st.replace("&ecirc;","ê")
-		st = st.replace("&ocirc;","ô")
-		st = st.replace("&quest;","q")
-		st = '{0}{1}'.format(st[0].upper(), st[1:])
-		return st
 
 	def on_entry1_key_press_event(self, widget, keyboard):
 		#seulement la touche entre permet d envoyer un message

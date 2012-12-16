@@ -4,9 +4,9 @@ import gtk
 import pygtk
 import cleverbot
 import statistique
-import re
 import time
 import random
+import format_bot
 
 class Interface_hideman():
 	def __init__(self,controller):
@@ -53,7 +53,7 @@ class Interface_hideman():
 
 
 	def print_text(self,name,text):
-		text = self.formating_bot_text(text)
+		text = format_bot.formating_bot_text(text)
 		self.liststore.append([str(name),str(text)])
 
 	def on_human_clicked(self, widget):
@@ -82,23 +82,6 @@ class Interface_hideman():
 		self.human.set_sensitive(human_robot)
 		self.send.set_sensitive(send)
 
-	#ajoute une majuscule au debut de chaine et termine par un point si necessaire
-	def formating_bot_text(self, st):
-		st = st.strip()
-		m = re.search(r'[\?\.\!]$',st)
-		if m is None:
-			st += '.'
-		st = st.replace("&eacute;","é")
-		st = st.replace("&ntilde","n") #??
-		st = st.replace("&ccedil;","ç")
-		st = st.replace("&egrave;","è")
-		st = st.replace("&agrave;","a")
-		st = st.replace("&ecirc;","ê")
-		st = st.replace("&ocirc;","ô")
-		st = st.replace("&quest;","q")
-		st = '{0}{1}'.format(st[0].upper(), st[1:])
-		return st		
-	
 	
 	def on_entry1_key_press_event(self, widget, keyboard):
 		#seulement la touche entre permet d envoyer un message
@@ -205,7 +188,10 @@ sock_serv.listen(1)
 
 (sock, address) = sock_serv.accept()
 
-stat = statistique.Stat("stat.data")
+if sys.argv[3]:
+	stat = statistique.Stat(str(sys.argv[3]))
+	print "Log des parties dans {0}".format(sys.argv[3])
+
 global bot
 tr = TrControllerClient(sock,address)
 tr.run()
@@ -213,5 +199,7 @@ tr.run()
 channel_sock = glib.IOChannel (sock.fileno())
 channel_sock.set_flags (channel_sock.get_flags() | glib.IO_FLAG_NONBLOCK)
 channel_sock.add_watch (condition=glib.IO_IN, callback=handle_read_sock)
+
+print "En attente de joueur sur HOST:{0} PORT:{1}".format(sys.argv[1],sys.argv[2])
 
 glib.MainLoop().run()

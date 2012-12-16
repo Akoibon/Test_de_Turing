@@ -3,21 +3,23 @@
 Turing Test Program
 by [Akoibon:quentin.heyler@yahoo.fr]
 
++++ Introduction +++
+
 Ceci est un programme qui permet jouer au test de Turing.
-Dans un test de Turing, les joueurs doivent décider si ils parlent à un humain ou à une machine.
-Le code a était créer pour un atelier présenté lors du 100 éme anniversaire d'Alan Turing : https://project.inria.fr/turing2012/
+Dans un test de Turing, les joueurs doivent décider si ils parlent à un être humain ou à une machine.
+Le code a était créer pour un atelier du 100 éme anniversaire d'Alan Turing : https://project.inria.fr/turing2012/
 Il a était présenté plus tard pour le whatever apero du hackerspace rennais le 01/02/2012.
+C'est le cleverbot qui joue l'intelligence artificielle : http://cleverbot.com/
+J'ai égalemnt utilisé une API pour parler avec le bot : http://code.google.com/p/pycleverbot/
 
 Pour ce jeu, on cache un humain quelque part qui receptionne les communications.
-C'est lui qui 
+Au début de chaque partie, c'est lui qui décide si il répond au joueur ou si il laisse le robot faire.
 Pour jouer il est necessaire de diposer de plusieurs pc relié en réseaux.
-Sur une 
-L offre deux interfaces pour communiquer
-Il utilise le cleverbot
+Le pc de l'humain caché doit pouvoir accéder à : 'Les Internets' pour discuter avec le cleverbot.
 
 +++ Librairie nécessaire +++
 
-Pour qu ca marche, il faut la librairie graphique [gtk] et le binding [pygtk].
+Pour que ca fonctionne, il faut la librairie graphique [gtk] et le binding [pygtk].
 On peut tester pour voire si les librairies sont ok en utilisant l'interpreteur python dans un terminal :
 akoibon@akoibon-machine:~$ python
 Python 2.6.6 (r266:84292, Dec 27 2010, 00:02:40) 
@@ -29,7 +31,37 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 +++ Mise en place +++
 
+On doit mettre en place l'humain caché et attendre un joueur.
+Ensuite le joueur se connecte sur l'adresse ip et le port ouvert.
+Pour lancer plusieurs fois le test, il faut faire plusieurs fois les commandes suivantes.
+
+++ 1 Mise en place de l'humain caché
+
+Sur le pc de l'humain caché, on ouvre une socket en écoute avec :
+HOST= Adresse ip du pc de l'humain caché
+PORT= Le port a ouvrir, en choisir un non-utilisé
+
+akoibon@akoibon-machine:~$ python server_hideman.py HOST PORT
+
+++ 2 Mise en place du joueur
+
+Sur le pc du joueur, on se connecte à la socket de l'humain caché avec :
+HOST= Adresse ip de l'humain caché
+PORT= Le port ouver chez l'humain caché
+LOG= Chemin du fichier de log des parties [Optionnel]
+
+akoibon@akoibon-machine:~$ python joueur_client.py HOST PORT [LOG]
+
+
++++ Utilisation +++
+
+Une fois mis en place ..
+
++++ Conseil +++
+
+Pour que le test fonctionne bien, il est préférable que les joueurs ne voient pas et n'entendent pas l'humain caché.
+
 Creative Commons Licence
 
 Remerciement dans l'ordre des coups de main:
-Joseph,Francois,Geb,Anthony, manu et python
+Joseph, Francois, Geb, Anthony, Manu et Python
