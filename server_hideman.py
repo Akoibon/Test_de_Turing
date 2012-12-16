@@ -137,14 +137,16 @@ def handle_read_sock (source, condition):
 	
 	if msg == "++++reload++++":
 		tr.reload()
-		stat.load()
-		stat.add_partie()
-		stat.save()
+		if do_stat:
+			stat.load()
+			stat.add_partie()
+			stat.save()
 	elif msg == "++++vote=robot++++":
 		tr.view.set_active_button(False,False)
-		stat.load()
-		stat.vote(True,bot)
-		stat.save()
+		if do_stat:
+			stat.load()
+			stat.vote(True,bot)
+			stat.save()
 		tr.print_text("info","La partie se termine")
 		if(bot):
 			tr.print_text("info","Le robot se fait demasquer")
@@ -154,9 +156,10 @@ def handle_read_sock (source, condition):
 			sock.send("++++robot=loose++++")
 	elif msg == "++++vote=human++++":
 		tr.view.set_active_button(False,False)
-		stat.load()
-		stat.vote(False,bot)
-		stat.save()
+		if do_stat:
+			stat.load()
+			stat.vote(False,bot)
+			stat.save()
 		tr.print_text("info","La partie se termine")
 		if(bot):
 			tr.print_text("info","Le robot se fait passer pour un humain")
@@ -178,28 +181,43 @@ def handle_read_sock (source, condition):
 		
 	return True
 
+#main principal
+if __name__ == "__main__":
+	if 3 != len(sys.argv)  | len(sys.argv) != 4:
+		print "+++Turing_test_HELP+++"
+		print "\tserver_hideman.py HOST PORT"
+		print "\tserver_hideman.py HOST PORT [STAT]"
+		print "You can also go to the README.fr"
+		print ""
+	else:
+		#statistique pour le jeu
+		if len(sys.argv)==4:
+			stat = statistique.Stat(str(sys.argv[3]))
+			print "Statistique des parties dans le fichier:{0}".format(sys.argv[3])
+			do_stat=True
+		
+		else:
+			do_stat=False		
+		
+		#creation de la socket
+		sock_serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sock_serv.bind((str(sys.argv[1]), int(sys.argv[2])))
+		sock_serv.listen(1)
 
+		print "En attente de joueur sur HOST:{0} PORT:{1}".format(sys.argv[1],sys.argv[2])
 
+		#en attente d'un joueur
+		(sock, address) = sock_serv.accept()
 
+		#affichage de la magnifique interface graphique
+		global bot
+		tr = TrControllerClient(sock,address)
+		tr.run()
 
-sock_serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock_serv.bind((str(sys.argv[1]), int(sys.argv[2])))
-sock_serv.listen(1)
+		#gestion du multiprocessus: socket + gtk
+		channel_sock = glib.IOChannel (sock.fileno())
+		channel_sock.set_flags (channel_sock.get_flags() | glib.IO_FLAG_NONBLOCK)
+		channel_sock.add_watch (condition=glib.IO_IN, callback=handle_read_sock)
 
-(sock, address) = sock_serv.accept()
-
-if sys.argv[3]:
-	stat = statistique.Stat(str(sys.argv[3]))
-	print "Log des parties dans {0}".format(sys.argv[3])
-
-global bot
-tr = TrControllerClient(sock,address)
-tr.run()
-
-channel_sock = glib.IOChannel (sock.fileno())
-channel_sock.set_flags (channel_sock.get_flags() | glib.IO_FLAG_NONBLOCK)
-channel_sock.add_watch (condition=glib.IO_IN, callback=handle_read_sock)
-
-print "En attente de joueur sur HOST:{0} PORT:{1}".format(sys.argv[1],sys.argv[2])
-
-glib.MainLoop().run()
+		#on envoie la sauce avec la boucle principale
+		glib.MainLoop().run()

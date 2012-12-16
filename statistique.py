@@ -1,4 +1,5 @@
 import cPickle
+import os
 
 #parametre: voteRobotWin = le joueur vote pour un robot et le joueur gagne
 #-> robot demasquer
@@ -15,12 +16,12 @@ import cPickle
 class Stat:
 	def __init__(self,fichier):
 		self.fichier = fichier
-		self.nbPartie = 0
-		self.voteRobotWin = 0
-		self.voteRobotLoose = 0
-		self.voteHumanWin = 0
-		self.voteHumanLoose = 0
-
+		if os.path.exists(fichier):
+			self.load()
+		else :
+			self.init()
+			#creer
+			self.save()
 				
 	def save(self):
 		sauvegarde = [self.nbPartie , self.voteRobotWin , self.voteRobotLoose , self.voteHumanWin, self.voteHumanLoose ]

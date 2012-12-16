@@ -130,33 +130,47 @@ def handle_read_sock (source, condition):
 	
 	elif msg == "++++robot=win++++":
 		control.print_text("info","Tu gagnes ! Le robot ne se fait pas passer pour un humain")
-		control.print_text("info", "pour recommencer une nouvelle partie, il faut cliquer sur le bouton en haut à gauche :)")
+		control.print_text("info", "Pour recommencer une nouvelle partie, il faut cliquer sur le bouton en haut à droite :)")
 		control.view.set_active_button(False,True)
 	elif msg == "++++robot=loose++++":
 		control.print_text("info","Tu perds ! Ce n'est pas un robot mais un humain")
-		control.print_text("info", "pour recommencer une nouvelle partie, il faut cliquer sur le bouton en haut à gauche :)")
+		control.print_text("info", "Pour recommencer une nouvelle partie, il faut cliquer sur le bouton en haut à droite :)")
 		control.view.set_active_button(False,True)
 	elif msg == "++++human=loose++++":
 		control.print_text("info","Tu perds ! Le robot se fait passer pour un humain")
-		control.print_text("info", "pour recommencer une nouvelle partie, il faut cliquer sur le bouton en haut à gauche :)")
+		control.print_text("info", "Pour recommencer une nouvelle partie, il faut cliquer sur le bouton en haut à droite :)")
 		control.view.set_active_button(False,True)
 	elif msg == "++++human=win++++":
 		control.print_text("info","Tu gagnes ! Tu as reconnu un humain")
-		control.print_text("info", "pour recommencer une nouvelle partie, il faut cliquer sur le bouton en haut à gauche :)")
+		control.print_text("info", "Pour recommencer une nouvelle partie, il faut cliquer sur le bouton en haut à droite :)")
 		control.view.set_active_button(False,True)
 	else:
 		control.print_text("hide",msg)
 	return True
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+if __name__ == "__main__":
+	if 3 != len(sys.argv):
+		print "+++Turing_test_HELP+++"
+		print "\tjoueur_client.py HOST PORT"
+		print "You can also go to the README.fr"
+		print ""
 
-sock.connect ((str(sys.argv[1]), int(sys.argv[2])))
 
-control = Controller(sock)
-control.run()
-
-channel_sock = glib.IOChannel (sock.fileno())
-channel_sock.set_flags (channel_sock.get_flags() | glib.IO_FLAG_NONBLOCK)
-channel_sock.add_watch (condition=glib.IO_IN, callback=handle_read_sock)
-
-glib.MainLoop().run()
+	else:
+		#creation de la socket
+		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		
+		#connection de la socket
+		sock.connect ((str(sys.argv[1]), int(sys.argv[2])))
+		
+		#creation de la superbe interface graphique pour le joueur
+		control = Controller(sock)
+		control.run()
+		
+		#gestion du multiprocessus: socket + gtk
+		channel_sock = glib.IOChannel (sock.fileno())
+		channel_sock.set_flags (channel_sock.get_flags() | glib.IO_FLAG_NONBLOCK)
+		channel_sock.add_watch (condition=glib.IO_IN, callback=handle_read_sock)
+		
+		#on envoie la sauce avec la boucle principale
+		glib.MainLoop().run()
