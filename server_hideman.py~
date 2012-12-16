@@ -53,7 +53,7 @@ class Interface_hideman():
 
 
 	def print_text(self,name,text):
-		text = format_bot.good_text(text)
+		text = format_bot.formating_bot_text(text)
 		self.liststore.append([str(name),str(text)])
 
 	def on_human_clicked(self, widget):
