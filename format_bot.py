@@ -1,7 +1,7 @@
 # coding=utf-8
 import re
 
-def good_text(st):
+def from_bot(st):
 		st = st.strip()
 		m = re.search(r'[\?\.\!]$',st)
 		if m is None:
@@ -10,7 +10,7 @@ def good_text(st):
 		st = st.replace("&ntilde","n") #??
 		st = st.replace("&ccedil;","ç")
 		st = st.replace("&egrave;","è")
-		st = st.replace("&agrave;","a")
+		st = st.replace("&agrave;","à")
 		st = st.replace("&ecirc;","ê")
 		st = st.replace("&ocirc;","ô")
 		st = st.replace("&quest;","q")

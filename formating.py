@@ -1,28 +1,30 @@
+# coding=utf-8
 import re
-import sys
-#https://github.com/aristofor/aristuff/blob/master/ari/utils/base36.py
-#http://www.virtualenv.org/en/latest/
-#python formating.py 'KtytPyp!'
-st = sys.argv[1].strip()
-print st
-m = re.search(r'[\?\.\!]$',st)
 
-if m is None:
-	st += '.'
+def from_bot(st):
+	st = st.strip()
+	m = re.search(r'[\?\.\!]$',st)
+	if m is None:
+		st += '.'
+	st = st.replace("&eacute;","é")
+	st = st.replace("&ntilde","n") #??
+	st = st.replace("&ccedil;","ç")
+	st = st.replace("&egrave;","è")
+	st = st.replace("&agrave;","à")
+	st = st.replace("&ecirc;","ê")
+	st = st.replace("&ocirc;","ô")
+	st = st.replace("&quest;","q")
+	st = '{0}{1}'.format(st[0].upper(), st[1:])
+	return st
 
-print repr(st)
-
-
-st = '{0}{1}'.format(st[0].upper(), st[1:])
-
-print st
-
-raise SystemExit()
-
-#.title()
-#.capitalize()
-
-
-
-#.replace("old","new")
-#&eacute;
+#pas encore implementé dans le code principal
+def to_bot(st):
+	st = st.replace("é","e")
+	#st = st.replace("&ntilde","n") #??
+	st = st.replace("ç","c")
+	st = st.replace("è","e")
+	st = st.replace("à","a")
+	st = st.replace("ê","e")
+	st = st.replace("ô","o")
+	#st = st.replace("&quest;","q")
+	return st

@@ -6,7 +6,7 @@ import cleverbot
 import statistique
 import time
 import random
-import format_bot
+import formating
 
 class Interface_hideman():
 	def __init__(self,controller):
@@ -53,7 +53,7 @@ class Interface_hideman():
 
 
 	def print_text(self,name,text):
-		text = format_bot.good_text(text)
+		text = formating.from_bot(text)
 		self.liststore.append([str(name),str(text)])
 
 	def on_human_clicked(self, widget):

@@ -3,7 +3,7 @@
 import socket, glib, sys
 import gtk 
 import pygtk
-import format_bot
+import formating
 
 class Interface:
 	def __init__(self,controller):
@@ -62,7 +62,7 @@ class Interface:
 			self.entry.set_text("")	
 
 	def print_text(self,name,text):
-		text = format_bot.good_text(text)
+		text = formating.from_bot(text)
 		self.liststore.append([str(name),str(text)])
 		self.scrolledwindow.get_vadjustment().set_value( self.scrolledwindow.get_vadjustment().get_upper())
 

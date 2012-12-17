@@ -26,7 +26,7 @@ class Session(object):
         headers={}
         headers['User-Agent']='Mozilla/5.0 (Windows NT 6.1; WOW64; rv:7.0.1) Gecko/20100101 Firefox/7.0'
         headers['Accept']='text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
-        headers['Accept-Language']='fr;q=0.8,fr;q=0.5'
+        headers['Accept-Language']='fr;q=0.8;en-us;q=0.5,en;q=0.2'
         headers['X-Moz']='prefetch'
         headers['Accept-Charset']='ISO-8859-1,utf-8;q=0.7,*;q=0.7'
         headers['Referer']='http://www.cleverbot.com'
