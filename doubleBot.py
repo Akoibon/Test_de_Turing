@@ -1,5 +1,4 @@
 # coding=utf-8
-#not the final version
 import cleverbot
 import formating
 
