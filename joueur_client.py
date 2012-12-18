@@ -129,20 +129,20 @@ def handle_read_sock (source, condition):
 		control.view.set_active_button(True,True)
 	
 	elif msg == "++++robot=win++++":
-		control.print_text("info","Tu gagnes ! Le robot ne se fait pas passer pour un humain")
-		control.print_text("info", "Pour recommencer une nouvelle partie, il faut cliquer sur le bouton en haut à droite :)")
+		control.print_text("info","Tu gagnes ! C'est bien un robot !")
+		control.print_text("info", "Pour recommencer une nouvelle partie, il faut cliquer sur le bouton en haut à droite.")
 		control.view.set_active_button(False,True)
 	elif msg == "++++robot=loose++++":
 		control.print_text("info","Tu perds ! Ce n'est pas un robot mais un humain")
-		control.print_text("info", "Pour recommencer une nouvelle partie, il faut cliquer sur le bouton en haut à droite :)")
+		control.print_text("info", "Pour recommencer une nouvelle partie, il faut cliquer sur le bouton en haut à droite.")
 		control.view.set_active_button(False,True)
 	elif msg == "++++human=loose++++":
 		control.print_text("info","Tu perds ! Le robot se fait passer pour un humain")
-		control.print_text("info", "Pour recommencer une nouvelle partie, il faut cliquer sur le bouton en haut à droite :)")
+		control.print_text("info", "Pour recommencer une nouvelle partie, il faut cliquer sur le bouton en haut à droite.")
 		control.view.set_active_button(False,True)
 	elif msg == "++++human=win++++":
-		control.print_text("info","Tu gagnes ! Tu as reconnu un humain")
-		control.print_text("info", "Pour recommencer une nouvelle partie, il faut cliquer sur le bouton en haut à droite :)")
+		control.print_text("info","Tu gagnes ! Tu viens de parler avec un humain")
+		control.print_text("info", "Pour recommencer une nouvelle partie, il faut cliquer sur le bouton en haut à droite.")
 		control.view.set_active_button(False,True)
 	else:
 		control.print_text("hide",msg)
@@ -150,7 +150,7 @@ def handle_read_sock (source, condition):
 
 if __name__ == "__main__":
 	if 3 != len(sys.argv):
-		print "+++Turing_test_HELP+++"
+		print "+++ Help section of the Turing test +++"
 		print "\tjoueur_client.py HOST PORT"
 		print "You can also go to the README.fr"
 		print ""

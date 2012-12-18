@@ -169,7 +169,7 @@ def handle_read_sock (source, condition):
 			sock.send("++++human=win++++")
 	elif bot:
 		tr.print_text("joueur",msg)
-		databot=tr.cb.Ask(msg)
+		databot=tr.cb.Ask(formating.to_bot(msg))
 		time.sleep(random.randint(3,5))
 		sock.send(databot)
 		tr.print_text("bot",databot)
@@ -184,7 +184,7 @@ def handle_read_sock (source, condition):
 #main principal
 if __name__ == "__main__":
 	if 3 != len(sys.argv)  | len(sys.argv) != 4:
-		print "+++Turing_test_HELP+++"
+		print "+++ Help section of the Turing test +++"
 		print "\tserver_hideman.py HOST PORT"
 		print "\tserver_hideman.py HOST PORT [STAT]"
 		print "You can also go to the README.fr"
